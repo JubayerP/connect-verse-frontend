@@ -1,13 +1,13 @@
 import {
+    Button,
     Card, CardBody,
-    CardFooter, CardHeader, IconButton, Typography
+    CardFooter, CardHeader, Typography
 } from "@material-tailwind/react";
-import React from "react";
-import { FcLike } from 'react-icons/fc';
-import { FaComment } from 'react-icons/fa';
+import React, { useState } from "react";
 
 const Post = ({ post }) => {
     const { text, img, _id } = post;
+    const [open, setOpen] = useState(false);
     return (
         <Card className="lg:max-w-lg md:max-w-md sm:max-w-sm max-w-xs mx-auto">
             <CardHeader className="">
@@ -18,21 +18,20 @@ const Post = ({ post }) => {
                     {text}
                 </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center gap-7 pt-2">
-                <div className="flex gap-4">
-                    {/* <IconButton>
-                        <i className="fas fa-heart" />
-                    </IconButton>
-                    <IconButton variant="gradient">
-                        <i className="fas fa-heart" />
-                    </IconButton> */}
+            <CardFooter className="gap-7 pt-2">
+                {/* <div className="flex gap-10 justify-center mb-6">
                     <IconButton variant="outlined">
-                        <FcLike size={22}/>
+                        <FcLike size={22} />
                     </IconButton>
-                    <IconButton>
+
+                    <IconButton onClick={() => setOpen(true)}>
                         <FaComment />
                     </IconButton>
                 </div>
+
+                <Input className={`${open ? "block" : 'hidden'}`} label={open && "comment"} icon={open && <BiSend size={20} className="cursor-pointer"/>} /> */}
+
+                <Button variant="gradient">Details</Button>
             </CardFooter>
         </Card>
     );
