@@ -26,7 +26,7 @@ export default function NavBar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link to="/" className="flex items-center">
+        <Link to="/media" className="flex items-center">
           Media
         </Link>
       </Typography>
