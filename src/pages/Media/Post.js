@@ -4,10 +4,10 @@ import {
     CardFooter, CardHeader, Typography
 } from "@material-tailwind/react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
     const { text, img, _id } = post;
-    const [open, setOpen] = useState(false);
     return (
         <Card className="lg:max-w-lg md:max-w-md sm:max-w-sm max-w-xs mx-auto">
             <CardHeader className="">
@@ -19,19 +19,10 @@ const Post = ({ post }) => {
                 </Typography>
             </CardBody>
             <CardFooter className="gap-7 pt-2">
-                {/* <div className="flex gap-10 justify-center mb-6">
-                    <IconButton variant="outlined">
-                        <FcLike size={22} />
-                    </IconButton>
 
-                    <IconButton onClick={() => setOpen(true)}>
-                        <FaComment />
-                    </IconButton>
-                </div>
-
-                <Input className={`${open ? "block" : 'hidden'}`} label={open && "comment"} icon={open && <BiSend size={20} className="cursor-pointer"/>} /> */}
-
-                <Button variant="gradient">Details</Button>
+                <Link to={`/posts/${_id}`}>
+                    <Button variant="gradient">Details</Button>
+                </Link>
             </CardFooter>
         </Card>
     );

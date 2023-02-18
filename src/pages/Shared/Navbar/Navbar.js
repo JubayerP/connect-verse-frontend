@@ -2,11 +2,13 @@ import {
   Button,
   IconButton, MobileNav, Navbar, Typography
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AUTH_CONTEXT } from "../../../context/AuthProvider";
 
 export default function NavBar() {
   const [openNav, setOpenNav] = useState(false);
+  const { logOut, user } = useContext(AUTH_CONTEXT);
 
   useEffect(() => {
     window.addEventListener(
@@ -62,11 +64,17 @@ export default function NavBar() {
           <span>Connect Verse</span>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        <Link to="/signup">
-          <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-            <span>Get Started</span>
+        {user?.uid ?
+          <Button onClick={()=>logOut()} variant="gradient" size="sm" className="hidden lg:inline-block">
+            <span>Log out</span>
           </Button>
-        </Link>
+          :
+          <Link to="/signup">
+            <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+              <span>Get Started</span>
+            </Button>
+          </Link>
+        }
         <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
