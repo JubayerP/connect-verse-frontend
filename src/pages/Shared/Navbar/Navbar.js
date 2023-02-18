@@ -55,17 +55,17 @@ export default function NavBar() {
   return (
     <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          variant="small"
-          className="mr-4 cursor-pointer py-1.5 font-normal"
-        >
-          <span>Connect Verse</span>
-        </Typography>
+        <Link to='/'>
+          <Typography
+            variant="small"
+            className="mr-4 cursor-pointer py-1.5 font-normal"
+          >
+            <span>Connect Verse</span>
+          </Typography>
+        </Link>
         <div className="hidden lg:block">{navList}</div>
         {user?.uid ?
-          <Button onClick={()=>logOut()} variant="gradient" size="sm" className="hidden lg:inline-block">
+          <Button onClick={() => logOut()} variant="gradient" size="sm" className="hidden lg:inline-block">
             <span>Log out</span>
           </Button>
           :

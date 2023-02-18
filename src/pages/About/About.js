@@ -35,7 +35,7 @@ const About = () => {
                 <Button onClick={handleOpen}>Edit</Button>
             </div>
 
-            <Modal open={open} handleOpen={handleOpen} about={about} />
+            <Modal open={open} handleOpen={handleOpen} about={about} setOpen={setOpen}/>
         </div>
     );
 };

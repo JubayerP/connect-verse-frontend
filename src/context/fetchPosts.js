@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+
 export const useFetchPosts = () => {
     const { data: posts = [], isLoading, refetch } = useQuery({
         queryKey: ["posts"],

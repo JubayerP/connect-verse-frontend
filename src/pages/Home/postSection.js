@@ -5,6 +5,7 @@ import {
 } from "@material-tailwind/react";
 import React, { Fragment, useContext, useState } from 'react';
 import { AUTH_CONTEXT } from "../../context/AuthProvider";
+import { useFetchPosts } from "../../context/fetchPosts";
 
 
 
@@ -12,6 +13,8 @@ const PostSection = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
     const { user } = useContext(AUTH_CONTEXT);
+
+    const [posts, isLoading, refetch] = useFetchPosts()
 
 
     const handlePostSubmit = e => {
@@ -55,6 +58,7 @@ const PostSection = () => {
                         .then(data => {
                             if (data.acknowledged) {
                                 setOpen(false)
+                                refetch()
                             }
                         })
                 }
@@ -78,7 +82,7 @@ const PostSection = () => {
                         unmount: { scale: 0.9, y: -100 },
                     }}
                 >
-                    <DialogHeader>Its a simple dialog.</DialogHeader>
+                    <DialogHeader>Create your thoughts</DialogHeader>
                     <form onSubmit={handlePostSubmit}>
                         <DialogBody divider>
                             <Textarea name="text" size="lg" label="Post something" />

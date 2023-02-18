@@ -6,6 +6,7 @@ import Media from "../pages/Media/Media";
 import PostDetails from "../pages/PostDetails/PostDetails";
 import SignIn from "../pages/SignIn/SignIn";
 import { SignUp } from "../pages/SignUp/SignUp";
+import PrivateRoute from "./privateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home />
+                element: <PrivateRoute><Home /></PrivateRoute>
             },
             {
                 path: '/media',
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/posts/:id",
-                element: <PostDetails />,
+                element: <PrivateRoute><PostDetails /></PrivateRoute>,
                 loader: ({ params }) => fetch(`https://backend-silk-kappa.vercel.app/posts/${params.id}`)
             },
             {

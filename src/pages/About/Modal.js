@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Fragment, useContext } from "react";
 import { AUTH_CONTEXT } from "../../context/AuthProvider";
 
-export default function Modal({ open, handleOpen, about }) {
+export default function Modal({ open, handleOpen, about, setOpen }) {
 
     const { user } = useContext(AUTH_CONTEXT)
 
@@ -32,7 +32,7 @@ export default function Modal({ open, handleOpen, about }) {
             .then(res => res.json())
         .then(data => {
             alert("Edited")
-            handleOpen()
+            setOpen(false)
         })
     }
 

@@ -5,7 +5,7 @@ import {
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AUTH_CONTEXT } from "../../context/AuthProvider";
 import Loader from "../Shared/Loader/Loader";
 
@@ -13,13 +13,15 @@ const SignIn = () => {
     const { register, handleSubmit } = useForm();
 
     const { signIn, loading, setLoading, providerLogin } = useContext(AUTH_CONTEXT);
+    const location = useLocation()
     const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleGoogleLogin = () => {
         providerLogin()
             .then(result => {
                 const user = result.user;
-                navigate('/')
+                navigate(from, { replace: true })
             })
             .catch(err => {
                 console.log(err)
@@ -30,7 +32,7 @@ const SignIn = () => {
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                navigate('/')
+                navigate(from, { replace: true })
             })
             .catch(err => {
                 setLoading(false)
