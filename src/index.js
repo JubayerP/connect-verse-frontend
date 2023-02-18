@@ -3,17 +3,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import AuthProvider from "./context/AuthProvider";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-      <App />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
