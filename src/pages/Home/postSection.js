@@ -3,13 +3,15 @@ import {
     Dialog, DialogBody,
     DialogFooter, DialogHeader, Input, Textarea, Typography
 } from "@material-tailwind/react";
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
+import { AUTH_CONTEXT } from "../../context/AuthProvider";
 
 
 
 const PostSection = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
+    const { user } = useContext(AUTH_CONTEXT);
 
 
     const handlePostSubmit = e => {
@@ -35,12 +37,14 @@ const PostSection = () => {
                     const img = data.data.display_url;
 
                     const post = {
+                        name: user?.displayName,
+                        photo: user?.photoURL,
                         text,
                         img,
                         likes: [],
                     }
 
-                    fetch('http://localhost:5000/posts', {
+                    fetch('https://backend-silk-kappa.vercel.app/posts', {
                         method: "POST",
                         headers: {
                             "content-type": "application/json"

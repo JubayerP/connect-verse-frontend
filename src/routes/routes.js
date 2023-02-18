@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
+import About from "../pages/About/About";
 import Home from "../pages/Home/Home";
 import Media from "../pages/Media/Media";
 import PostDetails from "../pages/PostDetails/PostDetails";
@@ -30,7 +31,11 @@ export const router = createBrowserRouter([
             {
                 path: "/posts/:id",
                 element: <PostDetails />,
-                loader: ({params}) => fetch(`http://localhost:5000/posts/${params.id}`)
+                loader: ({ params }) => fetch(`https://backend-silk-kappa.vercel.app/posts/${params.id}`)
+            },
+            {
+                path: "/about",
+                element: <About />
             }
         ]
     }

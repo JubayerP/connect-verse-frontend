@@ -1,4 +1,5 @@
 import { Card, CardBody, CardHeader, IconButton, Input, Typography } from '@material-tailwind/react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { BiSend } from 'react-icons/bi';
@@ -20,7 +21,7 @@ const PostDetails = () => {
     const [_, __, refetch] = useFetchPosts()
 
     const handleLikeClick = () => {
-        axios.post(`http://localhost:5000/posts/${_id}/like`, { userId: user?.uid })
+        axios.post(`https://backend-silk-kappa.vercel.app/posts/${_id}/like`, { userId: user?.uid })
             .then((response) => {
                 setLiked(!liked);
                 refetch();
@@ -29,6 +30,45 @@ const PostDetails = () => {
                 console.log(error);
             });
     };
+
+
+    const {data: comments=[], isLoading} = useQuery({
+        queryKey: ["comments"],
+        queryFn: async () => {
+            const res = await fetch("https://backend-silk-kappa.vercel.app/comments")
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    const handleComment = e => {
+        e.preventDefault();
+        const text = e.target.comment.value;
+
+        const comment = {
+            comment: text,
+            postId: _id,
+            userId: user?.uid,
+            name: user?.displayName,
+            photo: user?.photoURL
+        }
+
+        fetch('https://backend-silk-kappa.vercel.app/comments', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(comment)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    refetch()
+                    alert("comment successfully added!")
+                    e.target.reset();
+                }
+            })
+    }
 
 
     return (
@@ -58,7 +98,9 @@ const PostDetails = () => {
                     </IconButton>
                 </div>
 
-                <Input className={`${open ? "block" : 'hidden'}`} label={open && "comment"} icon={open && <BiSend size={20} className="cursor-pointer" />} />
+                <form onSubmit={handleComment}>
+                    <Input name='comment' className={`${open ? "block" : 'hidden'}`} label={open && "comment"} icon={open && <BiSend size={20} className="cursor-pointer" />} />
+                </form>
 
 
                 <div>
@@ -66,6 +108,23 @@ const PostDetails = () => {
                         Comments
                     </Typography>
                     <div className='w-full h-px bg-gray-600'></div>
+
+                    <div>
+                        {
+                            comments.filter(c => c.postId === _id).map(comment =>
+                                <div key={comment._id} className="space-y-6 border-b-2 shadow px-4 py-2 my-4 rounded">
+                                    <div className='flex justify-center items-center gap-2'>
+                                        <img className='w-9 h-9 rounded-full object-cover' src={comment.photo} alt="" />
+                                        <span className='text-lg font-sm'>{comment.name}</span>
+                                    </div>
+
+                                    <div className='text-left text-lg font-sm text-[#2196F3]'>
+                                        {comment.comment}
+                                    </div>
+                            </div>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </div>
